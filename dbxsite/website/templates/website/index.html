@@ -1,0 +1,12 @@
+{% extends "website/base.html" %}
+{% block title %}
+    杜秉轩的个人网站
+{% endblock %}
+{% block body_content %}
+    {% for article in articles %}
+        <div>
+            <a href="{% url 'article:article_page' article.id %}">{{ article.title }}</a>
+            <span>{{ article.publish_time }}</span>
+        </div>
+    {% endfor %}
+{% endblock %}
