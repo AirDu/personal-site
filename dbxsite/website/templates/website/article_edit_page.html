@@ -1,16 +1,32 @@
 {% extends 'website/base.html' %}
 {% block body_content %}
-<form>
-<label>
-    <input type="text" name="title" class="ui input" value="{{ form.title|default:'' }}">
-</label>
-<label>
-    <textarea name="content" class="ui textarea">{{ form.content|default:'' }}</textarea>
-{#    <script type="text/javascript">#}
-{#        CKEDITOR.replace('content', {#}
-{#            language: 'zh-cn'#}
-{#        });#}
-{#    </script>#}
-</label>
-</form>
+    <div class="container">
+        <form role="form">
+            <div class="row">
+                <div class="form-group">
+                    <input title="title" type="text" name="title" class="form-control input-lg"
+                           value="{{ article.title|default_if_none:'' }}"
+                           placeholder="文章标题">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                <textarea title="content" name="content" class="form-control" style="resize: none;"
+                          rows="20" placeholder="在这里编辑文章内容">
+                    {{ article.content|default_if_none:'' }}
+                </textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <button class="btn btn-success btn-lg btn-block" type="button">提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    {#    <script type="text/javascript">#}
+    {#        CKEDITOR.replace('content', {#}
+    {#            language: 'zh-cn'#}
+    {#        });#}
+    {#    </script>#}
 {% endblock %}
