@@ -1,32 +1,53 @@
 {% extends 'website/base.html' %}
 {% block body_content %}
     <div class="container">
-        <form role="form">
+        <form role="form" method="post" action="{% url 'article:edit_action' %}" id="article-form">
+            {% csrf_token %}
+            <input type="hidden" name="article_id" value="{{ article.id | default:'0' }}"/>
             <div class="row">
                 <div class="form-group">
                     <input title="title" type="text" name="title" class="form-control input-lg"
-                           value="{{ article.title|default_if_none:'' }}"
+                           value="{{ article.title|default_if_none:'' }}" id="article-title"
                            placeholder="文章标题">
                 </div>
             </div>
             <div class="row">
                 <div class="form-group">
                 <textarea title="content" name="content" class="form-control" style="resize: none;"
-                          rows="20" placeholder="在这里编辑文章内容">
-                    {{ article.content|default_if_none:'' }}
-                </textarea>
+                          rows="20" placeholder="在这里编辑文章内容"
+                          id="article-content">{{ article.content|default_if_none:'' }}</textarea>
+                    <div id="md-preview"></div>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group">
-                    <button class="btn btn-success btn-lg btn-block" type="button">提交</button>
+                    <button class="btn btn-success btn-lg btn-block" type="button" id="submit-btn">提交</button>
                 </div>
             </div>
         </form>
     </div>
-    {#    <script type="text/javascript">#}
-    {#        CKEDITOR.replace('content', {#}
-    {#            language: 'zh-cn'#}
-    {#        });#}
-    {#    </script>#}
+    <script type="text/javascript">
+        $('#submit-btn').on('click', function () {
+            var articleTitle = $('#article-title').val(),
+                    articleContent = $('#article-content').val();
+            if ($.trim(articleTitle) == '') {
+                BootstrapDialog.show({
+                    type: BootstrapDialog.TYPE_DANGER,
+                    title: "错误",
+                    message: "文章标题不能为空！",
+                    buttons: [{
+                        label: '关闭',
+                        action: function (dialogItself) {
+                            dialogItself.close();
+                        }
+                    }]
+                });
+                return;
+            }
+            else {
+                $('#article-form').submit();
+            }
+            console.log('Submit');
+        });
+    </script>
 {% endblock %}
