@@ -1,4 +1,5 @@
 {% extends "website/base.html" %}
+{% load staticfiles %}
 {% block title %}
     杜秉轩的个人网站
 {% endblock %}
@@ -6,34 +7,52 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                <div class="container">
-                    <div class="row">
-                        <h2>最新文章</h2>
-                    </div>
-                    <div class="row">
-                        {% for article in articles %}
-                            <div>
+                <div class="row">
+                    <h2>最新文章</h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-11" style="background-color: gainsboro"></div>
+                </div>
+                <div class="row">
+                    {% for article in latest_articles %}
+                        <div class="row">
+                            <div class="col-lg-3">
                                 <a href="{% url 'article:article_page' article.id %}">{{ article.title }}</a>
-                                <span>{{ article.publish_time }}</span>
                             </div>
-                        {% endfor %}
-                    </div>
-                    <div class="row">
-                        <h2>热门文章</h2>
-                    </div>
-                    <div class="row">
-                        {% for article in articles %}
-                            <div>
+                            <div class="col-lg-3 col-md-push-4">
+                                <p>{{ article.publish_time }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="row">
+                    <h2>热门文章</h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-11" style="background-color: gainsboro"></div>
+                </div>
+                <div class="row">
+                    {% for article in hot_articles %}
+                        <div class="row">
+                            <div class="col-lg-3">
                                 <a href="{% url 'article:article_page' article.id %}">{{ article.title }}</a>
-                                <span>{{ article.publish_time }}</span>
                             </div>
-                        {% endfor %}
-                    </div>
+                            <div class="col-lg-3 col-md-push-4">
+                                <p>{{ article.publish_time }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="container">
-
+                <div class="panel panel-default">
+                    <div class="panel-heading">关于</div>
+                    <div class="panel-body">
+                        <p>微信公众号：杜秉轩的小站</p>
+                        <div class="media align-md">
+                            <img class="media-object" src="{% static 'img/qrcode_wechat.jpg' %}" alt="...">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

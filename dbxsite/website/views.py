@@ -7,13 +7,20 @@ from .models import Article
 
 
 def index(request):
+    hot_articles = Article.objects.all().order_by('-access_count')[:10]
+    latest_articles = Article.objects.all().order_by('publish_time')[:10]
+    return render(request, 'website/index.html', {'hot_articles': hot_articles, 'latest_articles': latest_articles})
+
+
+def article_list_page(request):
     articles = Article.objects.all()
-    return render(request, 'website/index.html', {'articles': articles})
+    return render(request, 'website/article_list_page.html', {'articles': articles})
 
 
 def article_page(request, article_id):
     article = Article.objects.get(pk=article_id)
-    print(article.content)
+    article.access_count += 1
+    article.save()
     return render(request, 'website/article_page.html', {'article': article})
 
 

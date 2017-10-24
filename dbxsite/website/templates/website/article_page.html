@@ -8,6 +8,14 @@
             <div class="h1">{{ article.title }}</div>
         </div>
         <div class="row">
+            <p class="col-md-9">阅读：{{ article.access_count }}</p>
+            <p class="col-md-3">发布时间：{{ article.publish_time }}</p>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="background-color: gainsboro"></div>
+        </div>
+        <br/>
+        <div class="row">
             <div id="article-content">{{ article.content }}</div>
         </div>
         <br/>
