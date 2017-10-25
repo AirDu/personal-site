@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
-from .models import Article
+from .models import Article, Tag, Category
 
 
 def index(request):
@@ -14,7 +14,10 @@ def index(request):
 
 def article_list_page(request):
     articles = Article.objects.all()
-    return render(request, 'website/article_list_page.html', {'articles': articles})
+    tags = Tag.objects.all()
+    categories = Category.objects.all()
+    return render(request, 'website/article_list_page.html', {'articles': articles, 'tags': tags,
+                                                              'categories': categories})
 
 
 def article_page(request, article_id):

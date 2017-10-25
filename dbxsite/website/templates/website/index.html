@@ -15,17 +15,17 @@
                 </div>
                 <div class="row">
                     {% for article in latest_articles %}
-                        <div class="row">
+                        <div class="row article-list">
                             <div class="col-lg-3">
                                 <a href="{% url 'article:article_page' article.id %}">{{ article.title }}</a>
                             </div>
-                            <div class="col-lg-3 col-md-push-4">
-                                <p>{{ article.publish_time }}</p>
+                            <div class="col-lg-3 col-md-push-5">
+                                <p>{{ article.publish_time | date:'Y年m月d日' }}</p>
                             </div>
                         </div>
                     {% endfor %}
                 </div>
-                <div class="row">
+                <div class="row article-content">
                     <h2>热门文章</h2>
                 </div>
                 <div class="row">
@@ -33,12 +33,12 @@
                 </div>
                 <div class="row">
                     {% for article in hot_articles %}
-                        <div class="row">
+                        <div class="row article-list">
                             <div class="col-lg-3">
                                 <a href="{% url 'article:article_page' article.id %}">{{ article.title }}</a>
                             </div>
-                            <div class="col-lg-3 col-md-push-4">
-                                <p>{{ article.publish_time }}</p>
+                            <div class="col-lg-3 col-md-push-5">
+                                <p>{{ article.publish_time | date:'Y年m月d日' }}</p>
                             </div>
                         </div>
                     {% endfor %}
@@ -46,15 +46,18 @@
             </div>
             <div class="col-md-4">
                 <div class="panel panel-default">
-                    <div class="panel-heading">关于</div>
+                    <div class="panel-heading"><strong>关于</strong></div>
                     <div class="panel-body">
                         <p>微信公众号：杜秉轩的小站</p>
-                        <div class="media align-md">
-                            <img class="media-object" src="{% static 'img/qrcode_wechat.jpg' %}" alt="...">
+                        <div class="media align-md thumbnail">
+                            <img class="media-object" src="{% static 'img/wechat.jpg' %}" alt="...">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <style type="text/css">
+
+    </style>
 {% endblock %}
