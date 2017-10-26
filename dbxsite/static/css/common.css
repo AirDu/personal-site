@@ -23,6 +23,13 @@
     font-family: "Consolas", "Microsoft YaHei";
 }
 
+.article-content li {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 1.1em;
+    font-family: "Consolas", "Microsoft YaHei";
+}
+
 pre code {
     font-size: 1.1em;
 }

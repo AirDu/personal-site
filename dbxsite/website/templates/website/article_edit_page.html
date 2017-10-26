@@ -12,12 +12,39 @@
                 </div>
             </div>
             <div class="row">
-                <div class="form-group">
-                <textarea title="content" name="content" class="form-control" style="resize: none;"
-                          rows="20" placeholder="在这里编辑文章内容"
-                          id="article-content">{{ article.content|default_if_none:'' }}</textarea>
-                    <div id="md-preview"></div>
+                <div class="dropdown">
+                    <input type="hidden" name="editor" value="{{ editor }}">
+                    <label for="select-editor">编辑器：</label>
+                    <button class="btn btn-default dropdown-toggle" href="#" id="select-editor"
+                            data-toggle="dropdown" style="margin-bottom: 10px">
+                        {{ editor }}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="select-editor">
+                        <li role="presentation">
+                            <a role="menuitem" href="{% url 'article:article_edit_page' article_id %}?editor=Markdown"
+                               tabindex="-1">Markdown</a>
+                        </li>
+                        <li role="presentation">
+                            <a role="menuitem" href="{% url 'article:article_edit_page' article_id %}?editor=Summernote"
+                               tabindex="-1">Summernote</a>
+                        </li>
+                    </ul>
                 </div>
+            </div>
+            <div class="row">
+                {% if editor == 'Summernote' %}
+                    <textarea style="display: none" name="content" title="content" id="content-area"></textarea>
+                    <div class="form-group" id="article-editor">
+                        {{ article.content|safe|linebreaks|default_if_none:'' }}
+                    </div>
+                {% elif editor == 'Markdown' %}
+                    <div class="form-group" id="article-editor">
+                    <textarea title="content" name="content" class="form-control" style="resize: none;"
+                              rows="20" placeholder="在这里编辑文章内容"
+                              id="article-content">{{ article.content|default_if_none:'' }}</textarea>
+                    </div>
+                {% endif %}
             </div>
             <div class="row">
                 <div class="form-group">
@@ -27,6 +54,19 @@
         </form>
     </div>
     <script type="text/javascript">
+        var editor_area = $('#article-editor');
+        var editor = '{{ editor }}';
+        console.log(editor);
+        if (editor == 'Summernote') {
+            editor_area.summernote({
+                placeholder: '在这里编辑文章内容',
+                height: 500,
+                fontNames: ['Arial', 'Consolas', 'Comic Sans MS', 'Courier New', 'Microsoft YaHei'],
+                lang: 'zh-CN',
+                enterHtml: '<p></p>' // '<br>', '<p>&nbsp;</p>', '<p><br></p>', '<div><br></div>'
+            });
+        }
+
         $('#submit-btn').on('click', function () {
             var articleTitle = $('#article-title').val(),
                     articleContent = $('#article-content').val();
@@ -45,9 +85,12 @@
                 return;
             }
             else {
+                if (editor == 'Summernote') {
+                    $('#content-area').text(editor_area.summernote('code'));
+                }
                 $('#article-form').submit();
             }
-            console.log('Submit');
         });
+        $('.dropdown-toggle').dropdown();
     </script>
 {% endblock %}

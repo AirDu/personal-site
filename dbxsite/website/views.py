@@ -28,16 +28,23 @@ def article_page(request, article_id):
 
 
 def article_edit_page(request, article_id):
+    editor = request.GET.get('editor', '')
     if article_id == '0':
-        return render(request, 'website/article_edit_page.html')
+        if not editor:
+            editor = 'Summernote'
+        return render(request, 'website/article_edit_page.html', {'article_id': 0, 'editor': editor})
     article = get_object_or_404(Article, pk=article_id)
-    return render(request, 'website/article_edit_page.html', {'article': article})
+    if not editor:
+        editor = article.editor
+    return render(request, 'website/article_edit_page.html', {'article': article, 'article_id': article.id,
+                                                              'editor': editor})
 
 
 def edit_action(request):
     title = request.POST.get('title', 'TITLE')
     content = request.POST.get('content', 'CONTENT')
     article_id = request.POST.get('article_id', '0')
+    editor = request.POST.get('editor', 'Summernote')
 
     if article_id == '0':
         article = Article.objects.create(title=title, content=content)
@@ -45,5 +52,6 @@ def edit_action(request):
         article = Article.objects.get(pk=article_id)
         article.title = title
         article.content = content
+        article.editor = editor
         article.save()
     return HttpResponseRedirect(reverse('article:article_page', args=[article.id]))

@@ -15,7 +15,7 @@
             <div class="col-md-12" style="background-color: gainsboro"></div>
         </div>
         <div class="row">
-            <div class="article-content">{{ article.content }}</div>
+            <div class="article-content">{{ article.content|safe }}</div>
         </div>
         <br/>
         <div class="row">
@@ -41,7 +41,9 @@
             });
 
             articleContent.html(marked(articleContent.html()));
-
+            $('pre').each(function (i, block) {
+                hljs.highlightBlock(block);
+            });
             $('pre code').each(function (i, block) {
                 hljs.highlightBlock(block);
             });
