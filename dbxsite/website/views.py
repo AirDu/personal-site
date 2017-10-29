@@ -1,4 +1,6 @@
 # coding=utf-8
+import json
+
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
@@ -29,15 +31,20 @@ def article_page(request, article_id):
 
 def article_edit_page(request, article_id):
     editor = request.GET.get('editor', '')
+    tags = list(Tag.objects.values('id', 'name'))
+    # tags = [i[0] for i in list(Tag.objects.values_list('name'))]
+    tags = json.dumps(tags)
+    print(tags)
     if article_id == '0':
         if not editor:
             editor = 'Summernote'
-        return render(request, 'website/article_edit_page.html', {'article_id': 0, 'editor': editor})
+        return render(request, 'website/article_edit_page.html', {'article_id': 0, 'editor': editor,
+                                                                  'tags': tags})
     article = get_object_or_404(Article, pk=article_id)
     if not editor:
         editor = article.editor
     return render(request, 'website/article_edit_page.html', {'article': article, 'article_id': article.id,
-                                                              'editor': editor})
+                                                              'editor': editor, 'tags': tags})
 
 
 def edit_action(request):

@@ -33,3 +33,12 @@
 pre code {
     font-size: 1.1em;
 }
+
+.article-list p {
+    font-size: 1.1em;
+}
+
+/*.no-margin-div {*/
+    /*margin-left: 0;*/
+    /*margin-right: 0;*/
+/*}*/
