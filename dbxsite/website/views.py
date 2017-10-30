@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
-from .models import Article, Tag, Category
+from .models import Article, Tag, Category, Editor
 
 
 def index(request):
@@ -34,10 +34,9 @@ def article_edit_page(request, article_id):
     tags = list(Tag.objects.values('id', 'name'))
     # tags = [i[0] for i in list(Tag.objects.values_list('name'))]
     tags = json.dumps(tags)
-    print(tags)
     if article_id == '0':
         if not editor:
-            editor = 'Summernote'
+            editor = Editor.objects.get(name='Summernote')
         return render(request, 'website/article_edit_page.html', {'article_id': 0, 'editor': editor,
                                                                   'tags': tags})
     article = get_object_or_404(Article, pk=article_id)
@@ -57,8 +56,9 @@ def edit_action(request):
         article = Article.objects.create(title=title, content=content)
     else:
         article = Article.objects.get(pk=article_id)
-        article.title = title
-        article.content = content
-        article.editor = editor
-        article.save()
+    editor = Editor.objects.get(name=editor)
+    article.title = title
+    article.content = content
+    article.editor = editor
+    article.save()
     return HttpResponseRedirect(reverse('article:article_page', args=[article.id]))

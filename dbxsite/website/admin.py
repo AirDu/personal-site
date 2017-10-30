@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Article, Tag, Category
+from .models import Article, Tag, Category, Editor
 
 
 class ArticleAdmin(admin.ModelAdmin):
@@ -20,7 +20,12 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name',)
 
 
+class EditorAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Tag, TagAdmin)
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(Editor, EditorAdmin)
 

@@ -55,6 +55,9 @@ class Editor(models.Model):
     name = models.CharField(max_length=128, unique=True, verbose_name='编辑器')
     status = models.IntegerField(default=1, verbose_name='状态')
 
+    def __str__(self):
+        return self.name
+
 
 class Comment(models.Model):
     user = models.ForeignKey(User)

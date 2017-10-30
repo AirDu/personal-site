@@ -1,5 +1,8 @@
 {% extends 'website/base.html' %}
+{% load staticfiles %}
 {% block body_content %}
+    {#    <script src="{% static 'semantic/dist/semantic.min.js' %}"></script>#}
+    {#    <link rel="stylesheet" type="text/css" href="{% static 'semantic/dist/semantic.min.css' %}">#}
     <div class="container">
         <form role="form" method="post" action="{% url 'article:edit_action' %}" id="article-form">
             {% csrf_token %}
@@ -38,16 +41,16 @@
                 <div class="col-md-8">
                     <input type="hidden" id="tags-value" value="{{ tags }}">
                     <input type="text" id="tag-input" class="form-control input-md" title="tags"
-                           placeholder="请选择标签" autocomplete="off">
+                           placeholder="请选择标签" name="tags" data-role="tagsinput">
                 </div>
             </div>
             <div class="row">
-                {% if editor == 'Summernote' %}
+                {% if editor.name == 'Summernote' %}
                     <textarea style="display: none" name="content" title="content" id="content-area"></textarea>
                     <div class="form-group" id="article-editor">
                         {{ article.content|safe|linebreaks|default_if_none:'' }}
                     </div>
-                {% elif editor == 'Markdown' %}
+                {% elif editor.name == 'Markdown' %}
                     <div class="form-group" id="article-editor">
                     <textarea title="content" name="content" class="form-control" style="resize: none;"
                               rows="20" placeholder="在这里编辑文章内容"
@@ -64,7 +67,7 @@
     </div>
     <script type="text/javascript">
         var editor_area = $('#article-editor');
-        var editor = '{{ editor }}';
+        var editor = '{{ editor.name }}';
 
         if (editor == 'Summernote') {
             editor_area.summernote({
@@ -103,40 +106,22 @@
         $('.dropdown-toggle').dropdown();
 
         var tag_input = $('#tag-input'),
-                tags_value = $('#tags-value').val();
-        var tag_obj = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            local: tags_value
-        });
-        tag_obj.initialize();
-        console.log(tags_value);
-        tag_input.typeahead({
-            source: tag_obj.ttAdapter(),
-            autoSelect: true
-        });
-        tag_input.change(function () {
-            var current = tag_input.typeahead("getActive");
-            if (current) {
-                // Some item from your model is active!
-                if (current.name == tag_input.val()) {
-                    // This means the exact match is found. Use toLowerCase() if you want case insensitive match.
-                } else {
-                    // This means it is only a partial match, you can either add a new item
-                    // or take the active if you don't want new items
+                tags_value = JSON.parse($('#tags-value').val());
+
+        tag_input.tagsinput({
+            maxTags: 8,
+            itemValue: 'id',
+            itemText: 'name',
+            typeahead: {
+                displayKey: 'name',
+                source: tags_value,
+                afterSelect: function () {
+                    this.$element[0].value = '';
                 }
-            } else {
-                // Nothing is active so it is a new value (or maybe empty value)
             }
         });
-        {#        tag_input.tagsinput({#}
-        {#            itemValue: 'id',#}
-        {#            itemText: 'name',#}
-        {#            typeahead: {#}
-        {#                name: 'tag_obj',#}
-        {#                displayKey: 'name',#}
-        {#                source: tag_obj.ttAdapter()#}
-        {#            }#}
-        {#        });#}
+        $('.bootstrap-tagsinput').css('display', 'block');
+        tag_input.tagsinput('add', {id: 5, name: 'hehe'});
+
     </script>
 {% endblock %}
