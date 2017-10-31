@@ -46,3 +46,11 @@ pre code {
 .bootstrap-tagsinput {
     display: block;
 }
+
+.panel {
+    margin-top: 20px;
+}
+
+.tag-div {
+    margin-bottom: 10px;
+}

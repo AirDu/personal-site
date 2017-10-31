@@ -40,16 +40,16 @@
                 </div>
                 <div class="col-md-8">
                     <input type="hidden" id="tags-value" value="{{ tags }}">
+                    <input type="hidden" id="article-tags" value="{{ article_tags }}">
                     <input type="text" id="tag-input" class="form-control input-md" title="tags"
-                           placeholder="请选择标签" name="tags" data-role="tagsinput">
+                           placeholder="请选择标签" name="tags" data-role="tagsinput" value="1">
                 </div>
             </div>
             <div class="row">
                 {% if editor.name == 'Summernote' %}
                     <textarea style="display: none" name="content" title="content" id="content-area"></textarea>
-                    <div class="form-group" id="article-editor">
-                        {{ article.content|safe|linebreaks|default_if_none:'' }}
-                    </div>
+                    <div class="form-group"
+                         id="article-editor">{{ article.content|safe|linebreaks|default_if_none:'' }}</div>
                 {% elif editor.name == 'Markdown' %}
                     <div class="form-group" id="article-editor">
                     <textarea title="content" name="content" class="form-control" style="resize: none;"
@@ -58,9 +58,16 @@
                     </div>
                 {% endif %}
             </div>
-            <div class="row">
-                <div class="form-group">
-                    <button class="btn btn-success btn-lg btn-block" type="button" id="submit-btn">提交</button>
+            <div class="row submit-btns">
+                <input class="form-control submit-stat" value="0" title="submit-stat" type="hidden"
+                       name="submit_stat">
+                <div class="form-group col-lg-3">
+                    <button class="btn btn-success btn-lg btn-block" type="button"
+                            id="submit-btn">提交</button>
+                </div>
+                <div class="form-group col-lg-push-6 col-lg-3">
+                    <button class="btn btn-info btn-lg btn-block" type="button"
+                            id="draft-btn">存草稿</button>
                 </div>
             </div>
         </form>
@@ -68,6 +75,8 @@
     <script type="text/javascript">
         var editor_area = $('#article-editor');
         var editor = '{{ editor.name }}';
+
+        $('.dropdown-toggle').dropdown();
 
         if (editor == 'Summernote') {
             editor_area.summernote({
@@ -79,9 +88,10 @@
             });
         }
 
-        $('#submit-btn').on('click', function () {
+        $('.submit-btns button').on('click', function () {
             var articleTitle = $('#article-title').val(),
-                    articleContent = $('#article-content').val();
+                    articleContent = $('#article-content').val(),
+                    articleStat = $('.submit-stat');
             if ($.trim(articleTitle) == '') {
                 BootstrapDialog.show({
                     type: BootstrapDialog.TYPE_DANGER,
@@ -100,13 +110,19 @@
                 if (editor == 'Summernote') {
                     $('#content-area').text(editor_area.summernote('code'));
                 }
+                if ($(this).attr('id') == 'submit-btn') {
+                    articleStat.val('1');
+                }
+                else if ($(this).attr('id') == 'draft-btn') {
+                    articleStat.val('0');
+                }
                 $('#article-form').submit();
             }
         });
-        $('.dropdown-toggle').dropdown();
 
         var tag_input = $('#tag-input'),
-                tags_value = JSON.parse($('#tags-value').val());
+                tags_value = JSON.parse($('#tags-value').val()),
+                article_tags = JSON.parse($('#article-tags').val());
 
         tag_input.tagsinput({
             maxTags: 8,
@@ -117,11 +133,14 @@
                 source: tags_value,
                 afterSelect: function () {
                     this.$element[0].value = '';
-                }
+                },
+                showHintOnFocus: true,
+                autoSelect: true
             }
         });
         $('.bootstrap-tagsinput').css('display', 'block');
-        tag_input.tagsinput('add', {id: 5, name: 'hehe'});
-
+        for (var i=0; i<article_tags.length; i++) {
+            tag_input.tagsinput('add', {id: article_tags[i].id, name: article_tags[i].name});
+        }
     </script>
 {% endblock %}

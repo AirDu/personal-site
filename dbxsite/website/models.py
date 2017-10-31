@@ -35,7 +35,10 @@ class Category(models.Model):
         return self.name
 
     def count(self):
-        return len(self.categories.all())
+        return len(self.articles.all().filter(status=1))
+
+    def draft_count(self):
+        return len(self.articles.all().filter(status=0))
 
 
 class Tag(models.Model):
@@ -48,7 +51,10 @@ class Tag(models.Model):
         return self.name
 
     def count(self):
-        return len(self.tags.all())
+        return len(self.articles.all().filter(status=1))
+
+    def draft_count(self):
+        return len(self.articles.all().filter(status=0))
 
 
 class Editor(models.Model):

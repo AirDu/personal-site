@@ -3,7 +3,7 @@
     文章列表
 {% endblock %}
 {% block body_content %}
-    <div class="container">
+    <div class="container" style="height: 880px">
         <div class="row">
             <div class="col-md-9">
                 <div class="row">
@@ -16,10 +16,10 @@
                 <div class="row">
                     {% for article in articles %}
                         <div class="row article-list">
-                            <div class="col-lg-3">
-                                <a href="{% url 'article:article_page' article.id %}">{{ article.title }}</a>
+                            <div class="col-lg-5">
+                                <a href="{% url 'article:article_page' article.id %}"><p>{{ article.title }}</p></a>
                             </div>
-                            <div class="col-lg-3 col-md-push-5">
+                            <div class="col-lg-3 col-md-push-3">
                                 <p>{{ article.publish_time | date:'Y年m月d日' }}</p>
                             </div>
                         </div>
@@ -27,38 +27,44 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="row">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">分类</div>
-                        <ul class="list-group">
-                            {% for cate in categories %}
-                                <li class="list-group-item">
-                                    <a href="#">{{ cate.name }}({{ cate.count }})</a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
+                {#                <div class="row">#}
+                {#                    <div class="panel panel-default">#}
+                {#                        <div class="panel-heading">分类</div>#}
+                {#                        <ul class="list-group">#}
+                {#                            {% for cate in categories %}#}
+                {#                                <li class="list-group-item">#}
+                {#                                    <a href="#">{{ cate.name }}({{ cate.count }})</a>#}
+                {#                                </li>#}
+                {#                            {% endfor %}#}
+                {#                        </ul>#}
+                {#                    </div>#}
+                {#                </div>#}
                 <div class="row">
                     <div class="panel panel-default">
                         <div class="panel-heading">标签</div>
                         <ul class="list-group">
                             {% for tag in tags %}
                                 <li class="list-group-item">
-                                    <a href="#">{{ tag.name }}({{ tag.count }})</a>
+                                    <a href="{% url 'article:article_list_page' %}?tag={{ tag.id }}">
+                                        {% if article_stats == 1 %}
+                                            {{ tag.name }}({{ tag.count }})
+                                        {% else %}
+                                            {{ tag.name }}({{ tag.draft_count }})
+                                        {% endif %}
+                                    </a>
                                 </li>
                             {% endfor %}
                         </ul>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">时间</div>
-                        <ul class="list-group">
-                            <li class="list-group-item"><a href="#">最近1个月</a></li>
-                        </ul>
-                    </div>
-                </div>
+                {#                <div class="row">#}
+                {#                    <div class="panel panel-default">#}
+                {#                        <div class="panel-heading">时间</div>#}
+                {#                        <ul class="list-group">#}
+                {#                            <li class="list-group-item"><a href="#">最近1个月</a></li>#}
+                {#                        </ul>#}
+                {#                    </div>#}
+                {#                </div>#}
             </div>
         </div>
     </div>

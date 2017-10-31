@@ -11,6 +11,11 @@
             <p class="col-md-9">阅读：{{ article.access_count }}</p>
             <p class="col-md-3">发布时间：{{ article.publish_time }}</p>
         </div>
+        <div class="row tag-div">
+            {% for tag in article.tags.all %}
+                <span class="label label-success">{{ tag.name }}</span>
+            {% endfor %}
+        </div>
         <div class="row">
             <div class="col-md-12" style="background-color: gainsboro"></div>
         </div>
