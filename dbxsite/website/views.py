@@ -4,6 +4,7 @@ import json
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 from .models import Article, Tag, Category, Editor
 
@@ -26,6 +27,7 @@ def article_list_page(request):
                                                               'categories': categories, 'article_stats': 1})
 
 
+@login_required
 def draft_list_page(request):
     articles = Article.objects.all().filter(status=0)
     tags = Tag.objects.all().filter(articles__status=0)
@@ -41,6 +43,7 @@ def article_page(request, article_id):
     return render(request, 'website/article_page.html', {'article': article})
 
 
+@login_required
 def article_edit_page(request, article_id):
     editor = request.GET.get('editor', '')
     tags = list(Tag.objects.values('id', 'name'))
@@ -66,6 +69,7 @@ def article_edit_page(request, article_id):
                                                               'article_tags': article_tags})
 
 
+@login_required
 def edit_action(request):
     title = request.POST.get('title', 'TITLE')
     content = request.POST.get('content', 'CONTENT')
