@@ -9,9 +9,7 @@ from tutorial.models import Tutorial
 class Article(models.Model):
     title = models.CharField(max_length=100, null=True, verbose_name='标题')
     content = models.TextField(null=True, verbose_name='内容')
-    # tags = models.CharField(max_length=100, null=True, verbose_name='标签')
     tags = models.ManyToManyField('Tag', null=True, verbose_name='标签', related_name='articles')
-    # category = models.CharField(max_length=32, null=True, verbose_name='分类')
     categories = models.ForeignKey('Category', null=True, verbose_name='分类', related_name='articles')
     publish_time = models.DateTimeField(auto_now_add=True, verbose_name='发布时间')
     modify_time = models.DateTimeField(auto_now=True, verbose_name='修改时间')
@@ -20,6 +18,7 @@ class Article(models.Model):
     # comments = models.ManyToManyField('Comment', null=True)
     # 1: 发表，0：草稿，-1：删除
     status = models.IntegerField(default=1, verbose_name='状态')
+    user = models.ForeignKey(User, null=True, verbose_name='用户')
 
     def __str__(self):
         return self.title
@@ -28,6 +27,7 @@ class Article(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=128, unique=True, verbose_name='名称')
     status = models.IntegerField(default=1, verbose_name='状态')
+    describe = models.CharField(max_length=512, null=True, verbose_name='描述')
 
     # articles = models.ManyToManyField('Article', null=True, verbose_name='文章', related_name='+')
 
