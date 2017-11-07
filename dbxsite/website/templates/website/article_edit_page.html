@@ -63,15 +63,19 @@
                        name="submit_stat">
                 <div class="form-group col-lg-3">
                     <button class="btn btn-success btn-lg btn-block" type="button"
-                            id="submit-btn">提交</button>
+                            id="submit-btn">提交
+                    </button>
                 </div>
                 <div class="form-group col-lg-push-6 col-lg-3">
                     <button class="btn btn-info btn-lg btn-block" type="button"
-                            id="draft-btn">存草稿</button>
+                            id="draft-btn">存草稿
+                    </button>
                 </div>
             </div>
         </form>
     </div>
+{% endblock %}
+{% block js_block %}
     <script type="text/javascript">
         var editor_area = $('#article-editor');
         var editor = '{{ editor.name }}';
@@ -139,7 +143,7 @@
             }
         });
         $('.bootstrap-tagsinput').css('display', 'block');
-        for (var i=0; i<article_tags.length; i++) {
+        for (var i = 0; i < article_tags.length; i++) {
             tag_input.tagsinput('add', {id: article_tags[i].id, name: article_tags[i].name});
         }
     </script>

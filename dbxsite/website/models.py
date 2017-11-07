@@ -19,6 +19,7 @@ class Article(models.Model):
     # 1: 发表，0：草稿，-1：删除
     status = models.IntegerField(default=1, verbose_name='状态')
     user = models.ForeignKey(User, null=True, verbose_name='用户')
+    top = models.IntegerField(default=0, verbose_name='置顶')
 
     def __str__(self):
         return self.title
