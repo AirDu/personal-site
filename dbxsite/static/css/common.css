@@ -39,8 +39,8 @@ pre code {
 }
 
 /*.no-margin-div {*/
-    /*margin-left: 0;*/
-    /*margin-right: 0;*/
+/*margin-left: 0;*/
+/*margin-right: 0;*/
 /*}*/
 
 .bootstrap-tagsinput {
@@ -53,4 +53,21 @@ pre code {
 
 .tag-div {
     margin-bottom: 10px;
+}
+
+a {
+    color: #333; /*无链接时颜色*/
+}
+
+/*a:hover {*/
+    /*color: #F00; !*鼠标经过链接时颜色*!*/
+/*}*/
+
+a:active {
+    color: grey; /*鼠标点击链接时颜色*/
+}
+
+.article-card {
+    border: 1px solid #eaeaea;
+    background-color: #fff;
 }

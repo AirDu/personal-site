@@ -43,6 +43,10 @@ def article_page(request, article_id):
     return render(request, 'website/article_page.html', {'article': article})
 
 
+def column_page(request):
+    return render(request, 'website/column_page.html')
+
+
 @login_required
 def article_edit_page(request, article_id):
     editor = request.GET.get('editor', '')
