@@ -11,16 +11,16 @@ from .models import Article, Tag, Category, Editor
 
 def index(request):
     hot_articles = Article.objects.all().filter(status=1).order_by('-access_count')[:6]
-    latest_articles = Article.objects.all().filter(status=1).order_by('publish_time')[:6]
+    latest_articles = Article.objects.all().filter(status=1).order_by('-publish_time')[:6]
     return render(request, 'website/index.html', {'hot_articles': hot_articles, 'latest_articles': latest_articles})
 
 
 def article_list_page(request):
     tag_id = request.GET.get('tag', '')
     if tag_id:
-        articles = Article.objects.filter(tags__id=tag_id, status=1)
+        articles = Article.objects.filter(tags__id=tag_id, status=1).order_by('-publish_time')
     else:
-        articles = Article.objects.filter(status=1)
+        articles = Article.objects.filter(status=1).order_by('-publish_time')
     tags = Tag.objects.filter(status=1)
     categories = Category.objects.filter(status=1)
     return render(request, 'website/article_list_page.html', {'articles': articles, 'tags': tags,
@@ -57,7 +57,7 @@ def article_edit_page(request, article_id):
         try:
             editor = Editor.objects.get(name=editor)
         except Exception as e:
-            editor = Editor.objects.get(name='Summernote')
+            editor = Editor.objects.get(name='wangEditor')
         return render(request, 'website/article_edit_page.html', {'article_id': 0, 'editor': editor, 'tags': tags,
                                                                   'article_tags': article_tags})
     article = get_object_or_404(Article, pk=article_id)

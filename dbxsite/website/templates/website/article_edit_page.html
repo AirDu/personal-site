@@ -1,8 +1,6 @@
 {% extends 'website/base.html' %}
 {% load staticfiles %}
 {% block body_content %}
-    {#    <script src="{% static 'semantic/dist/semantic.min.js' %}"></script>#}
-    {#    <link rel="stylesheet" type="text/css" href="{% static 'semantic/dist/semantic.min.css' %}">#}
     <div class="container">
         <form role="form" method="post" action="{% url 'article:edit_action' %}" id="article-form">
             {% csrf_token %}
@@ -25,6 +23,11 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="select-editor">
+                            <li role="presentation">
+                                <a role="menuitem"
+                                   href="{% url 'article:article_edit_page' article_id %}?editor=wangEditor"
+                                   tabindex="-1">wangEditor</a>
+                            </li>
                             <li role="presentation">
                                 <a role="menuitem"
                                    href="{% url 'article:article_edit_page' article_id %}?editor=Markdown"
@@ -56,9 +59,14 @@
                               rows="20" placeholder="在这里编辑文章内容"
                               id="article-content">{{ article.content|default_if_none:'' }}</textarea>
                     </div>
+                {% elif editor.name == 'wangEditor' %}
+                    <textarea style="display: none" name="content" title="content" id="content-area"></textarea>
+                    <div id="tools" class="toolbar"></div>
+                    <div class="form-group text" style="height: 600px; max-height: 800px;"
+                         id="article-editor">{{ article.content|safe|linebreaks|default_if_none:'' }}</div>
                 {% endif %}
             </div>
-            <div class="row submit-btns">
+            <div class="row submit-btns" style="margin-top: 1em;">
                 <input class="form-control submit-stat" value="0" title="submit-stat" type="hidden"
                        name="submit_stat">
                 <div class="form-group col-lg-3">
@@ -82,7 +90,17 @@
 
         $('.dropdown-toggle').dropdown();
 
-        if (editor == 'Summernote') {
+        if (editor == 'wangEditor') {
+            var E = window.wangEditor;
+            var e = new E('#tools', '#article-editor');
+            e.customConfig.zIndex = 0;
+            e.create();
+            E.fullscreen.init('#article-editor');
+{#            $('#' + e.textElemId).css('height', '400px');#}
+            {#            var e = new wangEditor(editor_area);#}
+            {#            e.create();#}
+        }
+        else if (editor == 'Summernote') {
             editor_area.summernote({
                 placeholder: '在这里编辑文章内容',
                 height: 500,
@@ -113,6 +131,9 @@
             else {
                 if (editor == 'Summernote') {
                     $('#content-area').text(editor_area.summernote('code'));
+                }
+                else if (editor == 'wangEditor') {
+                    $('#content-area').text(e.txt.html());
                 }
                 if ($(this).attr('id') == 'submit-btn') {
                     articleStat.val('1');

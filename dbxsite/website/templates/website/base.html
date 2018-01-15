@@ -9,7 +9,11 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'summernote/summernote.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'tagsinput/src/bootstrap-tagsinput.css' %}">
+    {#    <link rel="stylesheet" type="text/css" href="{% static 'wangEditor-2.1.23/dist/css/wangEditor.min.css' %}">#}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'wangEditor/plugin/fullscreen/wangEditor-fullscreen-plugin.css' %}">
     <meta charset="UTF-8">
+    <link rel="icon" href="{% static 'img/py.ico' %}" type="image/x-icon"/>
     <title>{% block title %}title{% endblock %}</title>
 </head>
 <body>
@@ -27,6 +31,9 @@
 <script src="{% static 'typeahead/dist/bloodhound.js' %}"></script>
 {#    <script src="{% static 'typeahead/dist/typeahead.bundle.min.js' %}"></script>#}
 <script src="{% static 'Bootstrap-3-Typeahead/bootstrap3-typeahead.min.js' %}"></script>
+<script src="{% static 'wangEditor/release/wangEditor.min.js' %}"></script>
+{#<script src="{% static 'wangEditor-2.1.23/dist/js/wangEditor.min.js' %}"></script>#}
+<script src="{% static 'wangEditor/plugin/fullscreen/wangEditor-fullscreen-plugin.js' %}"></script>
 </body>
 {% block js_block %}
 {% endblock %}

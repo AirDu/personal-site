@@ -16,7 +16,7 @@
     margin-bottom: 1em;
 }
 
-.article-content p li {
+.article-content p, li {
     line-height: 2;
 }
 
