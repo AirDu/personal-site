@@ -47,7 +47,11 @@
                 smartypants: false
             });
 
-            articleContent.html(marked(articleContent.html()));
+            if ("{{ article.editor }}" === "Markdown") {
+                articleContent.html(marked(articleContent.text()));
+            } else {
+                articleContent.html(marked(articleContent.html()));
+            }
             $('pre').each(function (i, block) {
                 hljs.highlightBlock(block);
             });
