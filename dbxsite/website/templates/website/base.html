@@ -14,6 +14,10 @@
           href="{% static 'wangEditor/plugin/fullscreen/wangEditor-fullscreen-plugin.css' %}">
     <meta charset="UTF-8">
     <link rel="icon" href="{% static 'img/py.ico' %}" type="image/x-icon"/>
+    <script src="{% static 'highlight/highlight.pack.js' %}"></script>
+    <script src="{% static 'marked/marked.min.js' %}"></script>
+    <script type="text/javascript"
+            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
     <title>{% block title %}title{% endblock %}</title>
 </head>
 <body>
@@ -23,8 +27,6 @@
 <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
 <script src="{% static 'bootstrap-3.3.7/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'dialog/src/js/bootstrap-dialog.js' %}"></script>
-<script src="{% static 'highlight/highlight.pack.js' %}"></script>
-<script src="{% static 'marked/marked.min.js' %}"></script>
 <script src="{% static 'summernote/summernote.min.js' %}"></script>
 <script src="{% static 'summernote/lang/summernote-zh-CN.js' %}"></script>
 <script src="{% static 'tagsinput/dist/bootstrap-tagsinput.min.js' %}"></script>
