@@ -54,9 +54,9 @@
                     <div class="form-group"
                          id="article-editor">{{ article.content|safe|linebreaks|default_if_none:'' }}</div>
                 {% elif editor.name == 'Markdown' %}
-                    <div class="form-group" id="article-editor" style="border:0px; height: auto; resize: none;">
+                    <div class="form-group" id="article-editor" style="border:0px; height: auto;">
                     <textarea title="content" name="content" class="form-control"
-                              rows="40" placeholder="在这里编辑文章内容"
+                              rows="40" placeholder="在这里编辑文章内容" style="resize: none;"
                               id="article-content">{{ article.content|default_if_none:'' }}</textarea>
                     </div>
                 {% elif editor.name == 'wangEditor' %}

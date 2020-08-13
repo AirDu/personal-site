@@ -88,9 +88,10 @@
         <entry file="file://$PROJECT_DIR$/website/templates/website/article_edit_page.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="242">
-              <caret line="58" column="38" selection-start-line="58" selection-start-column="38" selection-end-line="58" selection-end-column="38" />
+              <caret line="58" column="84" selection-start-line="58" selection-start-column="84" selection-end-line="58" selection-end-column="84" />
               <folding>
-                <element signature="e#3239#3286#0#HTML" expanded="true" />
+                <element signature="e#3239#3272#0#HTML" expanded="true" />
+                <element signature="e#3420#3441#0#HTML" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -909,9 +910,10 @@
     <entry file="file://$PROJECT_DIR$/website/templates/website/article_edit_page.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="242">
-          <caret line="58" column="38" selection-start-line="58" selection-start-column="38" selection-end-line="58" selection-end-column="38" />
+          <caret line="58" column="84" selection-start-line="58" selection-start-column="84" selection-end-line="58" selection-end-column="84" />
           <folding>
-            <element signature="e#3239#3286#0#HTML" expanded="true" />
+            <element signature="e#3239#3272#0#HTML" expanded="true" />
+            <element signature="e#3420#3441#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
