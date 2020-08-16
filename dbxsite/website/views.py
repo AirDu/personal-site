@@ -2,7 +2,7 @@
 import json
 
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
@@ -38,6 +38,8 @@ def draft_list_page(request):
 
 def article_page(request, article_id):
     article = Article.objects.get(pk=article_id)
+    if article.status == 0 and not request.user.is_superuser:
+        return HttpResponse("文章不存在！", status=404)
     article.access_count += 1
     article.save()
     return render(request, 'website/article_page.html', {'article': article})
